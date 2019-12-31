@@ -37,12 +37,10 @@ export class RecipeFormComponent {
   }
 
   onAddStep() {
-    (this.control.get('steps') as FormArray).push(
+    const steps = this.control.get('steps') as FormArray;
+    steps.push(
       new FormGroup({
-        id: new FormControl('', [
-          Validators.required,
-          Validators.pattern(/^[1-9]+[0-9]*$/)
-        ]),
+        id: new FormControl(steps.length + 1),
         step: new FormControl('', Validators.required)
       })
     );

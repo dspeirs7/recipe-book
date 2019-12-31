@@ -1,0 +1,26 @@
+<mat-card class="recipe-card">
+  <mat-card-header fxLayout="row" fxLayoutAlign="start center">
+    <a
+      mat-card-avatar
+      class="list-header"
+      [style.background-image]="'url(' + recipe.imagePath + ')'"
+      [routerLink]="recipe.id"
+    ></a>
+    <mat-card-title fxLayout="row" fxLayoutAlign="start center">
+      <a fxFlex="1 1 auto" [routerLink]="recipe.id">
+        {{ recipe.name }}
+      </a>
+      <button
+        fxFlex="0 0 auto"
+        mat-icon-button
+        [routerLink]="['edit', recipe.id]"
+      >
+        <mat-icon svgIcon="edit"></mat-icon>
+      </button>
+      <button fxFlex="0 0 auto" mat-icon-button (click)="delete(recipe.id)">
+        <mat-icon svgIcon="delete"></mat-icon>
+      </button>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-actions> </mat-card-actions>
+</mat-card>

@@ -64,7 +64,12 @@
           <input placeholder="#" matInput formControlName="id" readonly />
         </mat-form-field>
         <mat-form-field fxFlex="1 1 85%">
-          <input placeholder="Step" matInput formControlName="step" />
+          <textarea
+            placeholder="Step"
+            matInput
+            formControlName="step"
+            rows="2"
+          ></textarea>
         </mat-form-field>
         <div fxFlex="1 1 5%">
           <button mat-icon-button (click)="removeStep(i)">

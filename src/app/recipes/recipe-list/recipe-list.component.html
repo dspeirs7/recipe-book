@@ -9,31 +9,10 @@
     </button>
   </div>
   <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1em">
-    <mat-card *ngFor="let recipe of recipes$ | async" class="recipe-card">
-      <mat-card-header fxLayout="row" fxLayoutAlign="start center">
-        <a
-          mat-card-avatar
-          class="list-header"
-          [style.background-image]="'url(' + recipe.imagePath + ')'"
-          [routerLink]="recipe.id"
-        ></a>
-        <mat-card-title fxLayout="row" fxLayoutAlign="start center">
-          <a fxFlex="1 1 auto" [routerLink]="recipe.id">
-            {{ recipe.name }}
-          </a>
-          <button
-            fxFlex="0 0 auto"
-            mat-icon-button
-            [routerLink]="['edit', recipe.id]"
-          >
-            <mat-icon svgIcon="edit"></mat-icon>
-          </button>
-          <button fxFlex="0 0 auto" mat-icon-button (click)="delete(recipe.id)">
-            <mat-icon svgIcon="delete"></mat-icon>
-          </button>
-        </mat-card-title>
-      </mat-card-header>
-      <mat-card-actions> </mat-card-actions>
-    </mat-card>
+    <ng-container *ngIf="recipes$ | async as recipes">
+      <ng-container *ngFor="let recipe of recipes">
+        <app-recipe-item [recipe]="recipe"></app-recipe-item>
+      </ng-container>
+    </ng-container>
   </div>
 </ng-template>

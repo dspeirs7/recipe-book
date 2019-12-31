@@ -7,7 +7,7 @@ import { AuthService } from './auth/auth.service';
 @Component({
   selector: 'app-root',
   template: `
-    <div fxLayout="column" fxLayoutGap="1em">
+    <div fxLayout="column" fxLayoutGap="1em" fxFill>
       <app-header fxFlex="0 0 auto"></app-header>
       <div fxFlex="1 1 auto">
         <router-outlet></router-outlet>
