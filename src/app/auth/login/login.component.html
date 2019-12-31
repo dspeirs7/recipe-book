@@ -1,0 +1,38 @@
+<div fxLayout="column" fxLayoutAlign="center center">
+  <ng-container *ngIf="!isEmail && !isSignUp">
+    <div fxLayout="row" fxLayoutGap="1em">
+      <button mat-flat-button color="accent" (click)="loginWithGoogle()">
+        Login with Google
+      </button>
+      <button mat-flat-button color="primary" (click)="loginWithEmail()">
+        Login with Email
+      </button>
+      <button mat-flat-button color="primary" (click)="signUp()">
+        Sign Up
+      </button>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="isEmail || isSignUp">
+    <form [formGroup]="loginForm" class="form" (submit)="submit()">
+      <mat-form-field>
+        <input matInput placeholder="Email" formControlName="email" />
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Password"
+          type="password"
+          formControlName="password"
+        />
+      </mat-form-field>
+      <div fxLayout="row" fxLayoutGap="1em">
+        <button type="submit" mat-flat-button color="primary">
+          {{ isSignUp ? 'Sign up' : 'Login' }}
+        </button>
+        <button type="reset" mat-flat-button color="warn" (click)="onCancel()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </ng-container>
+</div>

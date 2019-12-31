@@ -1,0 +1,25 @@
+::ng-deep .mat-card-header-text {
+  width: 100%;
+}
+
+::ng-deep .mat-form-field-infix {
+  width: 150px !important;
+}
+
+table {
+  width: 100%;
+}
+
+.buttons {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.recipe-card {
+  max-width: 500px;
+  margin-bottom: 1em;
+}
+
+.toolbar {
+  font-size: 16px;
+}

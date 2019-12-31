@@ -1,0 +1,96 @@
+<div fxLayout="row" fxLayoutAlign="center">
+  <form [formGroup]="control" class="form" fxLayout="column" fxLayoutGap="1em">
+    <div fxLayout="row" fxLayoutAlign="space-between">
+      <button mat-flat-button color="warn" type="button" (click)="cancel()">
+        Cancel
+      </button>
+      <button mat-flat-button color="primary" [disabled]="control.invalid">
+        Save
+      </button>
+    </div>
+    <mat-form-field>
+      <input placeholder="Name" matInput formControlName="name" />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        placeholder="Image Url"
+        matInput
+        formControlName="imagePath"
+        #imagePath
+      />
+    </mat-form-field>
+    <div>
+      <img [src]="imagePath.value" class="img-responsive" />
+    </div>
+    <mat-form-field>
+      <textarea
+        placeholder="Description"
+        matInput
+        formControlName="description"
+        rows="6"
+      ></textarea>
+    </mat-form-field>
+    <div formArrayName="ingredients">
+      <h3>Ingredients</h3>
+      <div
+        *ngFor="let ingredientControl of ingredients.controls; let i = index"
+        [formGroupName]="i"
+        fxLayout="row"
+        fxLayoutGap="1em"
+      >
+        <mat-form-field fxFlex="1 1 75%">
+          <input placeholder="Name" matInput formControlName="name" />
+        </mat-form-field>
+        <mat-form-field fxFlex="1 1 20%">
+          <input placeholder="Amount" matInput formControlName="amount" />
+        </mat-form-field>
+        <div fxFlex="1 1 5%">
+          <button mat-icon-button (click)="removeIngredient(i)">
+            <mat-icon svgIcon="delete"></mat-icon>
+          </button>
+        </div>
+      </div>
+      <p *ngIf="ingredients.controls.length === 0">Add some ingredients!</p>
+    </div>
+    <div formArrayName="steps">
+      <h3>Steps</h3>
+      <div
+        *ngFor="let stepControl of steps.controls; let i = index"
+        [formGroupName]="i"
+        fxLayout="row"
+        fxLayoutGap="1em"
+      >
+        <mat-form-field fxFlex="1 1 10%">
+          <input placeholder="#" matInput formControlName="id" readonly />
+        </mat-form-field>
+        <mat-form-field fxFlex="1 1 85%">
+          <input placeholder="Step" matInput formControlName="step" />
+        </mat-form-field>
+        <div fxFlex="1 1 5%">
+          <button mat-icon-button (click)="removeStep(i)">
+            <mat-icon svgIcon="delete"></mat-icon>
+          </button>
+        </div>
+      </div>
+      <p *ngIf="steps.controls.length === 0">Add some steps!</p>
+    </div>
+  </form>
+</div>
+<div
+  class="margin-botton"
+  fxLayout="row"
+  fxLayoutGap="1em"
+  fxLayoutAlign="center"
+>
+  <button
+    mat-flat-button
+    color="primary"
+    type="button"
+    (click)="onAddIngredient()"
+  >
+    Add Ingredient
+  </button>
+  <button mat-flat-button color="primary" type="button" (click)="onAddStep()">
+    Add Step
+  </button>
+</div>

@@ -1,0 +1,25 @@
+<mat-toolbar color="primary">
+  <span fxShow="false" fxShow.gt-sm="true">Recipe Book</span>
+  <ng-container *ngIf="user$ | async">
+    <button
+      mat-flat-button
+      color="primary"
+      routerLink="/recipes"
+      routerLinkActive="active"
+    >
+      Recipes
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      routerLink="/shopping-list"
+      routerLinkActive="active"
+    >
+      Shopping list
+    </button>
+    <span fxFlex="1 1 auto"></span>
+    <button mat-flat-button color="primary" (click)="logout()">
+      Logout
+    </button>
+  </ng-container>
+</mat-toolbar>
