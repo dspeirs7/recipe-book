@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
   <span fxShow="false" fxShow.gt-xs="true">Recipe Book</span>
-  <ng-container *ngIf="user$ | async">
+  <ng-container *ngIf="user$ | async; else login">
     <button
       mat-flat-button
       color="primary"
@@ -22,4 +22,7 @@
       Logout
     </button>
   </ng-container>
+  <ng-template #login>
+    <span fxHide="true" fxShow.xs="true">Recipe Book</span>
+  </ng-template>
 </mat-toolbar>

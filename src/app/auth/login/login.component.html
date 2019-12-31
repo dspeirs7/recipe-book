@@ -1,6 +1,6 @@
 <div fxLayout="column" fxLayoutAlign="center center">
   <ng-container *ngIf="!isEmail && !isSignUp">
-    <div fxLayout="row" fxLayoutGap="1em">
+    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="1em">
       <button mat-flat-button color="accent" (click)="loginWithGoogle()">
         Login with Google
       </button>
