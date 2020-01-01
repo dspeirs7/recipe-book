@@ -20,7 +20,7 @@
       />
     </mat-form-field>
     <div>
-      <img [src]="imagePath.value" class="img-responsive" />
+      <img [src]="imagePath.value" class="img-responsive" alt="Recipe Image" />
     </div>
     <mat-form-field>
       <textarea
@@ -45,7 +45,11 @@
           <input placeholder="Amount" matInput formControlName="amount" />
         </mat-form-field>
         <div fxFlex="1 1 5%">
-          <button mat-icon-button (click)="removeIngredient(i)">
+          <button
+            mat-icon-button
+            aria-label="delete"
+            (click)="removeIngredient(i)"
+          >
             <mat-icon svgIcon="delete"></mat-icon>
           </button>
         </div>
@@ -72,7 +76,7 @@
           ></textarea>
         </mat-form-field>
         <div fxFlex="1 1 5%">
-          <button mat-icon-button (click)="removeStep(i)">
+          <button mat-icon-button aria-label="delete" (click)="removeStep(i)">
             <mat-icon svgIcon="delete"></mat-icon>
           </button>
         </div>

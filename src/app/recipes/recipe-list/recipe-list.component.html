@@ -1,18 +1,12 @@
-<ng-container *ngIf="loading$ | async; else loaded">
-  <app-loader></app-loader>
-</ng-container>
-
-<ng-template #loaded>
-  <div fxLayout="row" fxLayoutAlign="end">
-    <button mat-icon-button routerLink="new">
-      <mat-icon svgIcon="add"></mat-icon>
-    </button>
-  </div>
-  <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1em">
-    <ng-container *ngIf="recipes$ | async as recipes">
-      <ng-container *ngFor="let recipe of recipes">
-        <app-recipe-item [recipe]="recipe"></app-recipe-item>
-      </ng-container>
+<div fxLayout="row" fxLayoutAlign="end">
+  <button mat-icon-button aria-label="add" routerLink="new">
+    <mat-icon svgIcon="add"></mat-icon>
+  </button>
+</div>
+<div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1em">
+  <ng-container *ngIf="recipes$ | async as recipes">
+    <ng-container *ngFor="let recipe of recipes">
+      <app-recipe-item [recipe]="recipe"></app-recipe-item>
     </ng-container>
-  </div>
-</ng-template>
+  </ng-container>
+</div>

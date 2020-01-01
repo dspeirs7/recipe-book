@@ -10,12 +10,10 @@ import { Recipe } from '../state/recipe.model';
 })
 export class RecipeListComponent implements OnInit {
   recipes$: Observable<Recipe[]>;
-  loading$: Observable<boolean>;
 
   constructor(private query: RecipeQuery) {}
 
   ngOnInit() {
     this.recipes$ = this.query.selectAll();
-    this.loading$ = this.query.selectLoading();
   }
 }

@@ -1,6 +1,6 @@
 {
-  "name": "recipe-book",
-  "short_name": "recipe-book",
+  "name": "Recipe Book",
+  "short_name": "Recipe Book",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",

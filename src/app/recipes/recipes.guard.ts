@@ -23,7 +23,6 @@ export class RecipeListGuard extends CollectionGuard<RecipeState> {
 }
 
 @Injectable({ providedIn: 'root' })
-@CollectionGuardConfig({ awaitSync: true })
 export class ActiveRecipeGuard extends CollectionGuard<RecipeState> {
   constructor(service: RecipeService) {
     super(service);

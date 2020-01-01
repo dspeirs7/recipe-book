@@ -13,11 +13,17 @@
       <button
         fxFlex="0 0 auto"
         mat-icon-button
+        aria-label="edit"
         [routerLink]="['edit', recipe.id]"
       >
         <mat-icon svgIcon="edit"></mat-icon>
       </button>
-      <button fxFlex="0 0 auto" mat-icon-button (click)="delete(recipe.id)">
+      <button
+        fxFlex="0 0 auto"
+        mat-icon-button
+        aria-label="delete"
+        (click)="delete(recipe.id)"
+      >
         <mat-icon svgIcon="delete"></mat-icon>
       </button>
     </mat-card-title>
