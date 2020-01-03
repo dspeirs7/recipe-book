@@ -93,7 +93,11 @@
           >
             <mat-icon svgIcon="edit" aria-label="edit"></mat-icon>
           </button>
-          <button mat-icon-button aria-label="delete">
+          <button
+            mat-icon-button
+            aria-label="delete"
+            (click)="delete(recipe.id)"
+          >
             <mat-icon svgIcon="delete"></mat-icon>
           </button>
           <span fxFlex="1 1 auto"></span>

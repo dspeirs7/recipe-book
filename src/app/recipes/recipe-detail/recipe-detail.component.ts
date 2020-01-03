@@ -7,6 +7,7 @@ import { RecipeQuery } from '../state/recipe.query';
 import { Ingredient } from 'src/app/shared/ingredient.model';
 import { IngredientService } from 'src/app/shopping-list/state/ingredient.service';
 import { MessageService } from 'src/app/shared/message.service';
+import { RecipeService } from '../state/recipe.service';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -21,7 +22,8 @@ export class RecipeDetailComponent implements OnInit {
   stepColumns: string[] = ['id', 'step'];
 
   constructor(
-    private service: IngredientService,
+    private service: RecipeService,
+    private ingredients: IngredientService,
     private query: RecipeQuery,
     private message: MessageService,
     private router: Router
@@ -34,12 +36,19 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
-    this.service.add(ingredients);
+    this.ingredients.add(ingredients);
     const snackbarRef = this.message.open('Ingredients Saved!', 'View');
 
     snackbarRef.onAction().subscribe(() => {
       this.router.navigate(['/shopping-list']);
     });
+  }
+
+  delete(id: string) {
+    this.service.remove(id).then(() => {
+      this.message.open('Recipe deletd!', 'Close');
+    });
+    this.router.navigate(['/recipes']);
   }
 
   redirect(nextId: string) {

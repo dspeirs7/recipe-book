@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Location } from '@angular/common';
 import {
   FormArray,
   FormGroup,
@@ -14,14 +13,7 @@ import {
   styleUrls: ['./recipe-form.component.scss']
 })
 export class RecipeFormComponent {
-  constructor(
-    private containerCollection: ControlContainer,
-    private location: Location
-  ) {}
-
-  cancel() {
-    this.location.back();
-  }
+  constructor(private containerCollection: ControlContainer) {}
 
   onAddIngredient() {
     (this.control.get('ingredients') as FormArray).push(

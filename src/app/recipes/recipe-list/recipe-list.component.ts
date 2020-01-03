@@ -6,7 +6,10 @@ import { Recipe } from '../state/recipe.model';
 
 @Component({
   selector: 'app-recipe-list',
-  templateUrl: './recipe-list.component.html'
+  templateUrl: './recipe-list.component.html',
+  styles: [
+    'h2 { white-space: normal !important; font-weight: bold !important; cursor: pointer; }'
+  ]
 })
 export class RecipeListComponent implements OnInit {
   recipes$: Observable<Recipe[]>;
