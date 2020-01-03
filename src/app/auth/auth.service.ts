@@ -53,9 +53,10 @@ export class AuthService {
   }
 
   logout() {
-    this.afAuth.auth.signOut();
-    localStorage.clear();
-    this.router.navigate(['/login']);
+    this.afAuth.auth.signOut().then(() => {
+      localStorage.clear();
+      this.router.navigate(['/login']);
+    });
   }
 
   signup(email: string, password: string) {

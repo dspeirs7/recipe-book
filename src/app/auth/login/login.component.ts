@@ -50,7 +50,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     const { email, password } = this.loginForm.value;
 
     if (this.isSignUp) {
-      console.log('sign');
       this.service.signup(email, password);
     } else {
       this.service.loginWithEmail(email, password);

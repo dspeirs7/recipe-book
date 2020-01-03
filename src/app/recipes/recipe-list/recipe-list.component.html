@@ -4,12 +4,20 @@
   </button>
 </div>
 <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1em">
-  <ng-container *ngIf="recipes$ | async as recipes">
-    <mat-list>
-      <mat-list-item *ngFor="let recipe of recipes" [routerLink]="recipe.id">
-        <img matListAvatar [src]="recipe.imagePath" alt="recipe image" />
-        <h2 matLine>{{ recipe.name }}</h2>
-      </mat-list-item>
-    </mat-list>
+  <ng-container *ngIf="loading$ | async; else loaded">
+    <app-loader></app-loader>
   </ng-container>
+  <ng-template #loaded>
+    <ng-container *ngIf="recipes$ | async as recipes">
+      <mat-list *ngIf="recipes.length > 0; else noRecipes">
+        <mat-list-item *ngFor="let recipe of recipes" [routerLink]="recipe.id">
+          <img matListAvatar [src]="recipe.imagePath" alt="recipe image" />
+          <h2 matLine>{{ recipe.name }}</h2>
+        </mat-list-item>
+      </mat-list>
+      <ng-template #noRecipes>
+        <h2 class="text-center">Add some recipes!</h2>
+      </ng-template>
+    </ng-container>
+  </ng-template>
 </div>
