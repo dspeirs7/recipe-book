@@ -7,6 +7,7 @@ export interface Recipe {
   imagePath: string;
   steps: Step[];
   ingredients: Ingredient[];
+  userId: string;
 }
 
 export function createRecipe(params: Partial<Recipe>) {

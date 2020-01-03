@@ -11,6 +11,7 @@ import { Ingredient, createIngredient } from '../../shared/ingredient.model';
 import { IngredientForm } from '../ingredient-form';
 import { IngredientStore } from '../state/ingredient.store';
 import { MessageService } from '../../shared/message.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-shopping-list',
@@ -27,6 +28,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   selection = new SelectionModel<Ingredient>(true, []);
 
   constructor(
+    private auth: AuthService,
     private service: IngredientService,
     private query: IngredientQuery,
     private store: IngredientStore,
@@ -113,7 +115,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   }
 
   async onSubmit() {
-    const data = this.ingredientForm.value;
+    const data = { ...this.ingredientForm.value, userId: this.auth.userId };
     const id = this.query.getActiveId();
 
     if (id) {

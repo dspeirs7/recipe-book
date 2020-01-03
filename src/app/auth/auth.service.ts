@@ -9,6 +9,7 @@ import { auth } from 'firebase/app';
 })
 export class AuthService {
   private userSubject = new BehaviorSubject<firebase.User>(null);
+  private uid: string;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -19,8 +20,10 @@ export class AuthService {
       if (user) {
         localStorage.setItem('userData', JSON.stringify(user));
         this.userSubject.next(user);
+        this.uid = user.uid;
       } else {
         this.userSubject.next(null);
+        this.uid = null;
       }
     });
   }
@@ -59,6 +62,10 @@ export class AuthService {
     this.afAuth.auth
       .createUserWithEmailAndPassword(email, password)
       .then(() => this.successfulLogin());
+  }
+
+  get userId() {
+    return this.uid;
   }
 
   private successfulLogin() {

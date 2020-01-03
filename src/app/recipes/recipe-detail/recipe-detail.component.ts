@@ -8,6 +8,7 @@ import { Ingredient } from 'src/app/shared/ingredient.model';
 import { IngredientService } from 'src/app/shopping-list/state/ingredient.service';
 import { MessageService } from 'src/app/shared/message.service';
 import { RecipeService } from '../state/recipe.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -22,6 +23,7 @@ export class RecipeDetailComponent implements OnInit {
   stepColumns: string[] = ['id', 'step'];
 
   constructor(
+    private auth: AuthService,
     private service: RecipeService,
     private ingredients: IngredientService,
     private query: RecipeQuery,
@@ -36,7 +38,13 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
-    this.ingredients.add(ingredients);
+    this.ingredients.add(
+      ingredients.map(ingredient => ({
+        ...ingredient,
+        userId: this.auth.userId
+      }))
+    );
+
     const snackbarRef = this.message.open('Ingredients Saved!', 'View');
 
     snackbarRef.onAction().subscribe(() => {
@@ -55,5 +63,9 @@ export class RecipeDetailComponent implements OnInit {
     const oldId = this.query.getActiveId();
     const nextUrl = this.router.url.replace(oldId, nextId);
     this.router.navigateByUrl(nextUrl);
+  }
+
+  get userId() {
+    return this.auth.userId;
   }
 }

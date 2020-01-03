@@ -86,6 +86,7 @@
         </mat-card-content>
         <mat-card-actions>
           <button
+            *ngIf="userId === recipe.userId"
             fxFlex="0 0 auto"
             mat-icon-button
             aria-label="edit"
@@ -94,6 +95,7 @@
             <mat-icon svgIcon="edit" aria-label="edit"></mat-icon>
           </button>
           <button
+            *ngIf="userId === recipe.userId"
             mat-icon-button
             aria-label="delete"
             (click)="delete(recipe.id)"
