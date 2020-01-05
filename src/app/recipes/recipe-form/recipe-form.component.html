@@ -42,6 +42,7 @@
         [formGroupName]="i"
         fxLayout="row"
         fxLayoutGap="1em"
+        fxLayout.lt-sm="column"
       >
         <mat-form-field fxFlex="1 1 75%">
           <input placeholder="Name" matInput formControlName="name" />
@@ -68,6 +69,7 @@
         [formGroupName]="i"
         fxLayout="row"
         fxLayoutGap="1em"
+        fxLayout.lt-sm="column"
       >
         <mat-form-field fxFlex="1 1 10%">
           <input placeholder="#" matInput formControlName="id" readonly />
