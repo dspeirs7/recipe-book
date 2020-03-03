@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroupDirective } from '@angular/forms';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
-import { Observable, Subject } from 'rxjs';
-import { takeUntil, take, distinctUntilChanged } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { take, distinctUntilChanged, tap, startWith } from 'rxjs/operators';
 
 import { IngredientService } from '../state/ingredient.service';
 import { IngredientQuery } from '../state/ingredient.query';
@@ -18,10 +18,11 @@ import { AuthService } from 'src/app/auth/auth.service';
   templateUrl: './shopping-list.component.html',
   styleUrls: ['./shopping-list.component.scss']
 })
-export class ShoppingListComponent implements OnInit, OnDestroy {
+export class ShoppingListComponent implements OnInit {
   @ViewChild(FormGroupDirective) formRef: FormGroupDirective;
-  unsubscribe$ = new Subject<null>();
   loading$: Observable<boolean>;
+  ingredient$: Observable<Partial<Ingredient>>;
+  ingredients$: Observable<Ingredient[]>;
   ingredientForm = new IngredientForm();
   ingredientColumns: string[] = ['select', 'name', 'amount'];
   datasource = new MatTableDataSource<Ingredient>([]);
@@ -36,36 +37,29 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.query
-      .selectAll()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(ingredients => {
-        this.datasource.data = ingredients;
-      });
+    this.ingredients$ = this.query.selectAll();
     this.loading$ = this.query.selectLoading();
-    this.query
-      .selectActive()
-      .pipe(
-        takeUntil(this.unsubscribe$),
-        distinctUntilChanged((a, b) => {
-          if (a === b) {
-            return true;
-          }
+    this.ingredient$ = this.query.selectActive().pipe(
+      startWith(this.ingredientForm.value),
+      distinctUntilChanged((a, b) => {
+        if (a === b) {
+          return true;
+        }
 
-          if (a && b && a.id === b.id) {
-            return true;
-          }
+        if (a && b && a.id === b.id) {
+          return true;
+        }
 
-          return false;
-        })
-      )
-      .subscribe(ingredient => {
+        return false;
+      }),
+      tap(ingredient => {
         if (ingredient) {
           this.ingredientForm.patchValue(ingredient);
         } else {
           this.ingredientForm = new IngredientForm();
         }
-      });
+      })
+    );
   }
 
   isAllSelected() {
@@ -134,10 +128,5 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     if (id) {
       this.store.removeActive(id);
     }
-  }
-
-  ngOnDestroy() {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
   }
 }

@@ -5,6 +5,7 @@ import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { SharedModule } from '../shared/shared.module';
 import { IngredientFormComponent } from './ingredient-form/ingredient-form.component';
 import { ShoppingListGuard } from './shopping-list.guard';
+import { AuthGuard } from '../auth/auth.guard';
 
 @NgModule({
   declarations: [ShoppingListComponent, IngredientFormComponent],
@@ -14,7 +15,7 @@ import { ShoppingListGuard } from './shopping-list.guard';
       {
         path: '',
         component: ShoppingListComponent,
-        canActivate: [ShoppingListGuard],
+        canActivate: [AuthGuard, ShoppingListGuard],
         canDeactivate: [ShoppingListGuard]
       }
     ])

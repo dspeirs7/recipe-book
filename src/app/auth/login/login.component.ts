@@ -1,8 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 import { AuthService } from '../auth.service';
 
@@ -11,8 +8,7 @@ import { AuthService } from '../auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit, OnDestroy {
-  unsubscribe$ = new Subject<null>();
+export class LoginComponent implements OnInit {
   isEmail = false;
   isSignUp = false;
   loginForm = new FormGroup({
@@ -20,18 +16,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     password: new FormControl('', Validators.required)
   });
 
-  constructor(private service: AuthService, private router: Router) {}
+  constructor(private service: AuthService) {}
 
-  ngOnInit() {
-    this.service
-      .getUser()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(user => {
-        if (user) {
-          this.router.navigate(['/recipes']);
-        }
-      });
-  }
+  ngOnInit() {}
 
   onCancel() {
     this.isEmail = false;
@@ -58,10 +45,5 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   loginWithGoogle() {
     this.service.loginWithGoogle();
-  }
-
-  ngOnDestroy() {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
   }
 }

@@ -20,7 +20,10 @@ export class AuthService {
       if (user) {
         localStorage.setItem('userData', JSON.stringify(user));
         this.userSubject.next(user);
-        this.uid = user.uid;
+        if (!this.uid) {
+          this.uid = user.uid;
+          this.router.navigate(['/recipes']);
+        }
       } else {
         this.userSubject.next(null);
         this.uid = null;
@@ -41,15 +44,11 @@ export class AuthService {
   }
 
   loginWithEmail(email: string, password: string) {
-    this.afAuth.auth
-      .signInWithEmailAndPassword(email, password)
-      .then(() => this.successfulLogin());
+    this.afAuth.auth.signInWithEmailAndPassword(email, password);
   }
 
   loginWithGoogle() {
-    this.afAuth.auth
-      .signInWithPopup(new auth.GoogleAuthProvider())
-      .then(() => this.successfulLogin());
+    this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
   }
 
   logout() {
@@ -60,18 +59,10 @@ export class AuthService {
   }
 
   signup(email: string, password: string) {
-    this.afAuth.auth
-      .createUserWithEmailAndPassword(email, password)
-      .then(() => this.successfulLogin());
+    this.afAuth.auth.createUserWithEmailAndPassword(email, password);
   }
 
   get userId() {
     return this.uid;
-  }
-
-  private successfulLogin() {
-    this.ngZone.run(() => {
-      this.router.navigate(['/recipes']);
-    });
   }
 }

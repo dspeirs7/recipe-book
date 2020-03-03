@@ -28,7 +28,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule.enablePersistence(),
-    environment.production ? [] : AkitaNgDevtools.forRoot(),
+    environment.production ? [] : AkitaNgDevtools,
     AkitaNgRouterStoreModule,
     SharedModule,
     ServiceWorkerModule.register('ngsw-worker.js', {

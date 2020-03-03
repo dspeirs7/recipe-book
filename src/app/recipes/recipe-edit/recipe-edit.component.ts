@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
-import { startWith, filter, takeUntil } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { RecipeQuery } from '../state/recipe.query';
 import { Recipe } from '../state/recipe.model';
@@ -13,7 +13,7 @@ import { MessageService } from 'src/app/shared/message.service';
 @Component({
   selector: 'app-recipe-edit',
   template: `
-    <ng-container *ngIf="recipe$ | async as recipe">
+    <ng-container *ngIf="recipe$ | async">
       <app-recipe-form
         [formGroup]="recipeForm"
         (submit)="onSave()"
@@ -21,8 +21,7 @@ import { MessageService } from 'src/app/shared/message.service';
     </ng-container>
   `
 })
-export class RecipeEditComponent implements OnInit, OnDestroy {
-  unsubscribe$ = new Subject<null>();
+export class RecipeEditComponent implements OnInit {
   recipe$: Observable<Recipe>;
   recipeForm = new RecipeForm();
 
@@ -34,19 +33,11 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.recipe$ = this.recipeForm.valueChanges.pipe(
-      startWith(this.recipeForm.value)
-    );
-
-    this.query
-      .selectActive()
-      .pipe(
-        takeUntil(this.unsubscribe$),
-        filter(value => !!value)
-      )
-      .subscribe(recipe => {
+    this.recipe$ = this.query.selectActive().pipe(
+      tap(recipe => {
         this.initForm(recipe);
-      });
+      })
+    );
   }
 
   initForm(recipe: Recipe) {
@@ -93,10 +84,5 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
     this.message.open('Recipe Saved!', 'Close');
     this.router.navigate(['/recipes']);
-  }
-
-  ngOnDestroy() {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
   }
 }

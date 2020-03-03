@@ -15,8 +15,10 @@
   </ng-container>
 
   <ng-template #loaded>
-    <ng-container *ngIf="datasource.data.length > 0; else noIngredients">
-      <table mat-table [dataSource]="datasource">
+    <ng-container
+      *ngIf="ingredients$ | async as ingredients; else noIngredients"
+    >
+      <table mat-table [dataSource]="ingredients">
         <ng-container matColumnDef="select">
           <th mat-header-cell *matHeaderCellDef>
             <mat-checkbox

@@ -1,7 +1,13 @@
 <div fxLayout="row" fxLayoutAlign="center">
   <form [formGroup]="control" class="form" fxLayout="column" fxLayoutGap="1em">
     <div fxLayout="row" fxLayoutAlign="space-between">
-      <button mat-flat-button color="warn" type="reset" (click)="clear()">
+      <button
+        mat-flat-button
+        color="warn"
+        type="reset"
+        (click)="clear()"
+        [disabled]="control.pristine"
+      >
         Cancel
       </button>
       <button mat-flat-button color="primary" [disabled]="control.invalid">
