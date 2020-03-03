@@ -29,7 +29,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     AngularFireAuthModule,
     AngularFirestoreModule.enablePersistence(),
     environment.production ? [] : AkitaNgDevtools.forRoot(),
-    AkitaNgRouterStoreModule.forRoot(),
+    AkitaNgRouterStoreModule,
     SharedModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
